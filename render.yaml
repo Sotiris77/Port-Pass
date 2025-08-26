@@ -2,9 +2,10 @@ services:
   - type: web
     name: global-port-pass-api
     env: docker
-    plan: starter
     region: frankfurt
     dockerfilePath: backend/Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
     envVars:
       - key: ENV
         value: production
@@ -12,18 +13,22 @@ services:
         sync: false
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: 60
+
+      # Postgres (you will fill these from the DB you create in Render)
       - key: POSTGRES_USER
-        fromDatabase: { name: gpp-db, property: user }
+        sync: false
       - key: POSTGRES_PASSWORD
-        fromDatabase: { name: gpp-db, property: password }
+        sync: false
       - key: POSTGRES_DB
-        fromDatabase: { name: gpp-db, property: database }
+        sync: false
       - key: POSTGRES_HOST
-        fromDatabase: { name: gpp-db, property: host }
+        sync: false
       - key: POSTGRES_PORT
-        fromDatabase: { name: gpp-db, property: port }
+        value: 5432
+
+      # Cloudflare R2 (S3-compatible)
       - key: S3_ENDPOINT_URL
-        value: https://your-account-id.r2.cloudflarestorage.com
+        value: https://<your-account-id>.r2.cloudflarestorage.com
       - key: S3_BUCKET
         value: global-port-pass
       - key: S3_REGION
@@ -36,10 +41,3 @@ services:
         value: true
       - key: ADMIN_EMAIL
         value: sotiriskaramanoglou@gmail.com
-    healthCheckPath: /health
-    autoDeploy: true
-
-databases:
-  - name: gpp-db
-    plan: starter
-    region: frankfurt
