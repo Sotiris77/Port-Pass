@@ -3,9 +3,14 @@ services:
     name: global-port-pass-api
     env: docker
     region: frankfurt
+
+    # Tell Render where the Dockerfile is and use backend as build context
+    rootDir: backend
     dockerfilePath: ./Dockerfile
+
     healthCheckPath: /health
     autoDeploy: true
+
     envVars:
       - key: ENV
         value: production
@@ -14,7 +19,7 @@ services:
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: 60
 
-      # Postgres
+      # Postgres (fill in on Render → Environment)
       - key: POSTGRES_USER
         sync: false
       - key: POSTGRES_PASSWORD
@@ -28,9 +33,9 @@ services:
 
       # Cloudflare R2
       - key: S3_ENDPOINT_URL
-        value: https://<your-account-id>.r2.cloudflarestorage.com
+        sync: false   # set actual value in the dashboard
       - key: S3_BUCKET
-        value: global-port-pass
+        sync: false
       - key: S3_REGION
         value: auto
       - key: S3_ACCESS_KEY
@@ -39,5 +44,7 @@ services:
         sync: false
       - key: S3_USE_SSL
         value: true
+
       - key: ADMIN_EMAIL
         value: sotiriskaramanoglou@gmail.com
+
