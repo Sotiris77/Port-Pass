@@ -6,7 +6,7 @@ services:
 
     # Tell Render where the Dockerfile is and use backend as build context
     rootDir: backend
-    dockerfilePath: /Dockerfile
+    dockerfilePath: backend/Dockerfile
 
     healthCheckPath: /health
     autoDeploy: true
