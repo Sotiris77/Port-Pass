@@ -3,7 +3,7 @@ services:
     name: global-port-pass-api
     env: docker
     region: frankfurt
-    dockerfilePath: backend/Dockerfile
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /health
     autoDeploy: true
     envVars:
@@ -14,7 +14,7 @@ services:
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: 60
 
-      # Postgres (you will fill these from the DB you create in Render)
+      # Postgres
       - key: POSTGRES_USER
         sync: false
       - key: POSTGRES_PASSWORD
@@ -26,7 +26,7 @@ services:
       - key: POSTGRES_PORT
         value: 5432
 
-      # Cloudflare R2 (S3-compatible)
+      # Cloudflare R2
       - key: S3_ENDPOINT_URL
         value: https://<your-account-id>.r2.cloudflarestorage.com
       - key: S3_BUCKET
